@@ -55,6 +55,7 @@ public class PDFtoImageThread extends SwingWorker<Integer, Integer> {
     protected void done() {
         super.done();
         pb.setValue(100);
+        c.blockAll(false);
         try {
             Desktop.getDesktop().open(new File(String.valueOf(imgsDir)));
         } catch (IOException e) {

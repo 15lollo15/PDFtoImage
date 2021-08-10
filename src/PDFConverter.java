@@ -29,8 +29,10 @@ public class PDFConverter{
         pdfFile.createNewFile();
         PDDocument pdfDocument = new PDDocument();
 
+        int i = 0;
         for (File imgF : images) {
             addAImagePage(imgF, pdfDocument);
+
         }
         pdfDocument.save(pdfFile);
     }

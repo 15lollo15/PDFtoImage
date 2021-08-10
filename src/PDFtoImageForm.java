@@ -16,6 +16,7 @@ public class PDFtoImageForm extends JFrame{
     private JButton fcPDFdir;
     private JButton convertButton1;
     private JProgressBar progressBar1;
+    private JProgressBar progressBar2;
 
     public PDFtoImageForm(String title){
         super(title);
@@ -72,5 +73,9 @@ public class PDFtoImageForm extends JFrame{
 
     public JButton getConvertButton1() {
         return convertButton1;
+    }
+
+    public JProgressBar getProgressBar2() {
+        return progressBar2;
     }
 }

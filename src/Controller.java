@@ -21,17 +21,18 @@ public class Controller {
         this.form = pdFtoImageForm;
 
         setupListeners();
-        form.getSpinner1().setValue(new Integer(50));
+        form.getSpinner1().setValue(50);
         form.getComboBox1().addItem("PNG");
         form.getComboBox1().addItem("JPG");
         form.getProgressBar1().setVisible(false);
+        form.getProgressBar2().setVisible(false);
 
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         form.pack();
         form.setVisible(true);
     }
 
-    private void blockAll(boolean b) {
+    public void blockAll(boolean b) {
         form.getConvertButton1().setEnabled(!b);
         form.getConvertButton().setEnabled(!b);
     }
@@ -144,11 +145,10 @@ public class Controller {
                 for(int i = 0; i<splitted.length; i++)
                     imgs[i] = new File(splitted[i]);
 
-                try {
-                    PDFConverter.getInstance().imagesToPdf(imgs, new File(pdfDestPath));
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                form.getProgressBar2().setVisible(true);
+                blockAll(true);
+                ImageToPDFThread thread = new ImageToPDFThread(imgs, new File(pdfDestPath), me(), form.getProgressBar2());
+                thread.execute();
             }
         });
     }
