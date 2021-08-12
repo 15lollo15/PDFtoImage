@@ -20,9 +20,23 @@ public class MainClass {
     public static String IMAGE_FORMAT = "PNG";
 
     public static void main(String[] args) throws IOException {
+
+
         setLF();
         Controller controller = new Controller(PDFConverter.getInstance(), new PDFtoImageForm("Converter"));
 
+
+
+        /*
+        Interval i1 = Interval.getIntervalFromString("1-3");
+        Interval i2 = Interval.getIntervalFromString("4-6");
+        Intervals intervals = Intervals.getIntervalsFromString("1-3,4-6");
+        intervals.addInterval(i1);
+        intervals.addInterval(i2);
+
+
+        System.out.println(intervals.isInTheIntervals(7));
+        */
         /*
         if(args.length > 0){
             File tmp = new File(args[0]);

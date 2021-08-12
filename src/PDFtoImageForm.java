@@ -17,6 +17,7 @@ public class PDFtoImageForm extends JFrame{
     private JButton convertButton1;
     private JProgressBar progressBar1;
     private JProgressBar progressBar2;
+    private JTextField intervalField;
 
     public PDFtoImageForm(String title){
         super(title);
@@ -77,5 +78,9 @@ public class PDFtoImageForm extends JFrame{
 
     public JProgressBar getProgressBar2() {
         return progressBar2;
+    }
+
+    public JTextField getIntervalField() {
+        return intervalField;
     }
 }

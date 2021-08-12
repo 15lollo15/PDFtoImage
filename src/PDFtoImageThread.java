@@ -1,10 +1,12 @@
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class PDFtoImageThread extends SwingWorker<Integer, Integer> {
@@ -14,18 +16,22 @@ public class PDFtoImageThread extends SwingWorker<Integer, Integer> {
     private File imgsDir;
     private float dpi;
     private String format;
-    private String interval;
+    private Intervals intervals;
     private JProgressBar pb;
     private Controller c;
 
-    public PDFtoImageThread(File pdfFile, File imgsDir, float dpi, String format, String interval, JProgressBar pb, Controller c){
+    public PDFtoImageThread(File pdfFile, File imgsDir, float dpi, String format, Intervals pagesInterval, JProgressBar pb, Controller c){
         this.pdfFile = pdfFile;
         this.imgsDir = imgsDir;
         this.dpi = dpi;
         this.format = format;
-        this.interval = interval;
+        if(pagesInterval != null)
+            this.intervals = pagesInterval;
+        else
+            this.intervals = null;
         this.pb = pb;
         this.c = c;
+        //TO-DO: Check format
     }
 
     @Override
@@ -34,10 +40,18 @@ public class PDFtoImageThread extends SwingWorker<Integer, Integer> {
         try {
             PDDocument pdfDoc = Loader.loadPDF(pdfFile);
             int numPages = pdfDoc.getNumberOfPages();
+            int tot = numPages;
+            if(intervals != null)
+                tot = intervals.getIntervalsTotalSize();
+            int donePages = 0;
             for(int i = 0; i<numPages; i++) {
-                pdfConverter.renderAPage(pdfDoc, imgsDir, dpi, format, i);
-                publish((i*100)/numPages);
+                if(intervals == null || intervals.isInTheIntervals(i)) {
+                    pdfConverter.renderAPage(pdfDoc, imgsDir, dpi, format, i);
+                    donePages++;
+                }
+                publish((donePages*100)/tot);
             }
+            publish(100);
         } catch (IOException e) {
             e.printStackTrace();
             return 1;

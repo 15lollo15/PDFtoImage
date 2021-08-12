@@ -28,7 +28,6 @@ public class PDFConverter{
     public void imagesToPdf(File[] images, File pdfFile) throws IOException {
         pdfFile.createNewFile();
         PDDocument pdfDocument = new PDDocument();
-
         int i = 0;
         for (File imgF : images) {
             addAImagePage(imgF, pdfDocument);
@@ -49,12 +48,13 @@ public class PDFConverter{
         contentStream.close();
     }
 
-    public void pdfToImages(File pdfFile, File imgsDir, float dpi, String imgFormat, String pagesInterval) throws IOException {
+    public void pdfToImages(File pdfFile, File imgsDir, float dpi, String imgFormat, Intervals pagesIntervals) throws IOException {
         PDDocument pdfDocument = Loader.loadPDF(pdfFile);
         PDFRenderer pdfRenderer = new PDFRenderer(pdfDocument);
 
         for (int i = 0; i < pdfDocument.getNumberOfPages(); i++) {
-            renderAPage(pdfDocument, imgsDir, dpi, imgFormat, i);
+            if(pagesIntervals.isInTheIntervals(i))
+                renderAPage(pdfDocument, imgsDir, dpi, imgFormat, i);
         }
     }
 

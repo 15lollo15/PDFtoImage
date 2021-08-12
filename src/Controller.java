@@ -24,8 +24,10 @@ public class Controller {
         form.getSpinner1().setValue(50);
         form.getComboBox1().addItem("PNG");
         form.getComboBox1().addItem("JPG");
-        form.getProgressBar1().setVisible(false);
-        form.getProgressBar2().setVisible(false);
+        form.getProgressBar1().setEnabled(false);
+        form.getProgressBar2().setEnabled(false);
+        form.getIntervalField().setText("-");
+        form.setResizable(false);
 
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         form.pack();
@@ -85,10 +87,18 @@ public class Controller {
                 String ext = form.getComboBox1().getSelectedItem().toString();
 
                 form.getProgressBar1().setVisible(true);
-                PDFtoImageThread thread = new PDFtoImageThread(new File(pdfPath),new File(imgDirPath), dpi, ext, null,  form.getProgressBar1(), me());
-                thread.execute();
-                //pdfConverter.pdfToImages(new File(pdfPath),new File(pdfPath),dpi,ext, null);
-                blockAll(true);
+                String interval = form.getIntervalField().getText();
+                if(!interval.equals("-")) {
+                    PDFtoImageThread thread = new PDFtoImageThread(new File(pdfPath), new File(imgDirPath), dpi, ext, Intervals.getIntervalsFromString(interval), form.getProgressBar1(), me());
+                    thread.execute();
+                    //pdfConverter.pdfToImages(new File(pdfPath),new File(pdfPath),dpi,ext, null);
+                    blockAll(true);
+                }else{
+                    PDFtoImageThread thread = new PDFtoImageThread(new File(pdfPath), new File(imgDirPath), dpi, ext, null, form.getProgressBar1(), me());
+                    thread.execute();
+                    //pdfConverter.pdfToImages(new File(pdfPath),new File(pdfPath),dpi,ext, null);
+                    blockAll(true);
+                }
             }
         });
 
