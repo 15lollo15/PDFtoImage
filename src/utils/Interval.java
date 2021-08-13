@@ -1,3 +1,5 @@
+package utils;
+
 public class Interval {
 
     private int start;

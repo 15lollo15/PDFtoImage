@@ -1,17 +1,8 @@
-import org.apache.pdfbox.Loader;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.common.PDStream;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.apache.pdfbox.rendering.PDFRenderer;
+import com.formdev.flatlaf.FlatLightLaf;
+import gui.Controller;
+import model.PDFConverter;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class MainClass {
@@ -20,17 +11,17 @@ public class MainClass {
     public static String IMAGE_FORMAT = "PNG";
 
     public static void main(String[] args) throws IOException {
+        FlatLightLaf.setup();
 
-
-        setLF();
-        Controller controller = new Controller(PDFConverter.getInstance(), new PDFtoImageForm("Converter"));
+        Controller controller = new Controller();
+        controller.showWindow();
 
 
 
         /*
-        Interval i1 = Interval.getIntervalFromString("1-3");
-        Interval i2 = Interval.getIntervalFromString("4-6");
-        Intervals intervals = Intervals.getIntervalsFromString("1-3,4-6");
+        utils.Interval i1 = utils.Interval.getIntervalFromString("1-3");
+        utils.Interval i2 = utils.Interval.getIntervalFromString("4-6");
+        utils.Intervals intervals = utils.Intervals.getIntervalsFromString("1-3,4-6");
         intervals.addInterval(i1);
         intervals.addInterval(i2);
 

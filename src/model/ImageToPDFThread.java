@@ -1,3 +1,6 @@
+package model;
+
+import gui.Controller;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import javax.swing.*;
